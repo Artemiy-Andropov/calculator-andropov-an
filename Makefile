@@ -6,7 +6,7 @@ SRC_DIR = src
 TESTS = tests
 BUILD_DIR = build
 APP_EXE = $(BUILD_DIR)/app.exe
-UNIT_TESTS = $(BUILD_DIR)/unit_tests
+UNIT_TESTS = $(BUILD_DIR)/unit-tests
 
 UNIT_TESTS_DIR = $(TESTS)/unit
 INTEG_TESTS_DIR = $(TESTS)/integration
@@ -50,7 +50,7 @@ run-float: $(APP_EXE)
 	@$< --float
 
 run-unit-test: $(UNIT_TESTS)
-	@build/unit_tests.exe
+	@build/unit-tests.exe
 
 run-integration-tests: $(APP_EXE) install-deps
 	. $(VENV_BIN)/activate; $(PYTEST) $(INTEG_TESTS_DIR)/integ_tests.py
@@ -92,13 +92,13 @@ $(BUILD_GTEST)/gtest_main.a: $(BUILD_GTEST)/gtest-all.o $(BUILD_GTEST)/gtest_mai
 ######## BUILD UNIT TESTS ########
 ##################################
 
-$(UNIT_TESTS): build/unit_tests.exe
+$(UNIT_TESTS): build/unit-tests.exe
 
-$(BUILD_DIR)/unit_tests.exe: $(BUILD_GTEST)/gtest_main.a build/app-test.o tests/unit/unit_tests.cpp
+$(BUILD_DIR)/unit-tests.exe: $(BUILD_GTEST)/gtest_main.a build/app-test.o tests/unit/unit-tests.cpp
 	@$(CXX) -isystem $(GTEST_DIR)/include -pthread \
-		tests/unit/unit_tests.cpp \
+		tests/unit/unit-tests.cpp \
 		$(BUILD_GTEST)/gtest_main.a build/app-test.o \
-		-o build/unit_tests.exe
+		-o build/unit-tests.exe
 
 $(BUILD_DIR)/app-test.o: src/main.c
 	@$(CC) $(CFLAGS) -DGTEST -c src/main.c -o build/app-test.o -g
