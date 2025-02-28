@@ -1,0 +1,6 @@
+*.exe
+.pytest_cache/
+build/
+googletest/
+venv/
+__pycache__/
