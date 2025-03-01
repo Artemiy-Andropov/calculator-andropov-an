@@ -18,7 +18,7 @@ The following commands can be used to run this program:
 |make run-int|to run app.exe|
 |make run-float|to run app.exe --float|
 |make run-unit-test|to run unit-tests.exe|
-|run-integration-tests|to build and run integration tests|  
+|make run-integration-tests|to build and run integration tests|  
 
 Make run-int and make run-float require additional user input of arithmetic expressions
 
