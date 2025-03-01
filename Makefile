@@ -5,6 +5,7 @@ CFLAGS = -Wall -Wextra -Wpedantic -std=c11
 SRC_DIR = src
 TESTS = tests
 BUILD_DIR = build
+GOOGLE_TEST = googletest
 APP_EXE = $(BUILD_DIR)/app.exe
 UNIT_TESTS = $(BUILD_DIR)/unit-test
 
@@ -12,7 +13,7 @@ UNIT_TESTS_DIR = $(TESTS)/unit
 INTEG_TESTS_DIR = $(TESTS)/integration
 
 BUILD_GTEST = $(BUILD_DIR)/gtest
-GTEST_DIR ?= googletest/googletest
+GTEST_DIR ?= $(GOOGLE_TEST)/googletest
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 
 PIP = pip3
@@ -52,7 +53,7 @@ run-float: $(APP_EXE)
 run-unit-test: $(UNIT_TESTS)
 	@build/unit-test.exe
 
-run-integration-tests: $(APP_EXE) install-deps
+run-integration-tests: $(APP_EXE) venv
 	. $(VENV_BIN)/activate; $(PYTEST) $(INTEG_TESTS_DIR)/integ_tests.py
 
 format:
@@ -107,12 +108,12 @@ $(BUILD_DIR)/app-test.o: src/main.c
 ######## CONFIGURING VENV ########
 ##################################
 
-install-deps: venv
+venv: install-deps
 	@echo "Installing dependencies..."
 	@. $(VENV_ACTIVATE) && $(VENV_PIP) install --upgrade pip
 	@. $(VENV_ACTIVATE) && $(VENV_PIP) install pytest
 
-venv: check-venv
+install-deps: check-venv
 	@if [ ! -d "$(VENV_NAME)" ]; then \
 		echo "Creating virtual environment..."; \
 		$(PYTHON) -m venv $(VENV_NAME); \
