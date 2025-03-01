@@ -28,7 +28,7 @@ PYTEST = $(VENV_BIN)/pytest
 FORMAT_DIRS = $(SRC_DIR) $(UNIT_TESTS_DIR)
 
 $(shell mkdir -p build/gtest)
-$(shell git clone https://github.com/google/googletest &> /dev/null)
+$(shell [ ! -d "$(GOOGLE_TEST)" ] && git clone https://github.com/google/googletest &> /dev/null)
 
 .PHONY: all clean run-int run-float run-unit-test run-integration-tests
 
